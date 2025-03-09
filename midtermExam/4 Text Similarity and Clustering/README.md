@@ -162,8 +162,8 @@ $$
 
 where:
 
-- $ |v \cap w| $ is the **size of the intersection** (common elements).
-- $ |v \cup w| $ is the **size of the union** (all unique elements).
+- $|v \cap w|$ is the **size of the intersection** (common elements).
+- $|v \cup w|$ is the **size of the union** (all unique elements).
 
 ---
 
