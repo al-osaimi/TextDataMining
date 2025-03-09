@@ -72,9 +72,9 @@ TF-IDF is a technique used in **Natural Language Processing (NLP)** to measure t
 
 2. **Inverse Document Frequency (IDF)**: Measures how important a word is across multiple documents.
 
-   $$
-   IDF(w) = \log \left( \frac{\text{Total number of documents}}{\text{Number of documents containing word } w} \right)
-   $$
+$$
+IDF(w) = \log \left( \frac{\text{Total number of documents}}{\text{Number of documents containing word } w} \right)
+$$
 
 **TF-IDF Score**:
 
@@ -159,7 +159,7 @@ $$
 Using the **Bigram Language Model**, the probability of a sentence is:
 
 $$
-P(W) = P(w_1 | <s>) P(w_2 | w_1) P(w_3 | w_2) \dots P(w_n | w_{n-1}) P(</s> | w_n)
+P(W) = P(w_1 | < s>) P(w_2 | w_1) P(w_3 | w_2) \dots P(w_n | w_{n-1}) P( | w_n)
 $$
 
 Applying **Laplace Smoothing**, the bigram probability is:
@@ -170,18 +170,18 @@ $$
 
 where:
 
-- $ C(w*{i-1}, w_i) $ = Count of bigram $ (w*{i-1}, w_i) $
-- $ C(w*{i-1}) $ = Count of unigram $ w*{i-1} $
-- $ V $ = Vocabulary size (**1446** from the table)
+- $C(w*{i-1}, w_i)$ = Count of bigram $(w*{i-1}, w_i)$
+- $C(w*{i-1})$ = Count of unigram $w*{i-1}$
+- $V$ = Vocabulary size (**1446** from the table)
 - **Laplace smoothing (Add 1)** ensures probabilities are nonzero.
 
 ---
 
 ### **2. Extract Required Counts**
 
-For the sentence **`<s> i want english food </s>`**, we need:
+For the sentence **`<s> i want english food `**, we need:
 
-1. **P(i | \<s\>)**
+1. **P(i | < s>)**
 2. **P(want | i)**
 3. **P(english | want)** → **(Not in Table, Laplace smoothing applied)**
 4. **P(food | english)** → **(Not in Table, Laplace smoothing applied)**
@@ -189,31 +189,31 @@ For the sentence **`<s> i want english food </s>`**, we need:
 
 From the table:
 
-- $ C(i) = 2533 $
-- $ C(want) = 927 $
-- $ C(food) = 1093 $
+- $C(i) = 2533$
+- $C(want) = 927$
+- $C(food) = 1093$
 
 ---
 
 ### **3. Compute Bigram Probabilities with Laplace Smoothing**
 
-#### **Step 1: Compute P(i | \<>)**
+#### **Step 1: Compute P(i | < s>)**
 
-Since $ C(<s>, i) $ is missing, assume **1** (unknown case):
-
-$$
-P(i | <s>) = \frac{C(<s>, i) + 1}{C(<s>) + V} = \frac{1 + 1}{2533 + 1446}
-$$
+Since $C(< s>, i)$ is missing, assume **1** (unknown case):
 
 $$
-P(i | <s>) = \frac{2}{3979} \approx 0.0005
+P(i | < s>) = \frac{C(< s>, i) + 1}{C(< s>) + V} = \frac{1 + 1}{2533 + 1446}
+$$
+
+$$
+P(i | < s>) = \frac{2}{3979} \approx 0.0005
 $$
 
 ---
 
 #### **Step 2: Compute P(want | i)**
 
-From the table: $ C(i, want) = 827 $
+From the table: $C(i, want) = 827$
 
 $$
 P(want | i) = \frac{827 + 1}{2533 + 1446} = \frac{828}{3979} \approx 0.2081
@@ -239,12 +239,12 @@ $$
 
 ---
 
-#### **Step 5: Compute P(\</s> | food)**
+#### **Step 5: Compute P(< /s> | food)**
 
-Since **food → </s>** is missing:
+Since **food → < /s>** is missing:
 
 $$
-P(</s> | food) = \frac{0 + 1}{1093 + 1446} = \frac{1}{2539} \approx 0.00039
+P(\< /s> | food) = \frac{0 + 1}{1093 + 1446} = \frac{1}{2539} \approx 0.00039
 $$
 
 ---
@@ -254,7 +254,7 @@ $$
 Multiply all probabilities:
 
 $$
-P(\text{sentence}) = P(i | <s>) \times P(want | i) \times P(english | want) \times P(food | english) \times P(</s> | food)
+P(\text{sentence}) = P(i | < s>) \times P(want | i) \times P(english | want) \times P(food | english) \times P(\</s> | food)
 $$
 
 $$
@@ -288,7 +288,7 @@ $$
 Using the **Bigram Language Model**, the probability of a sentence is:
 
 $$
-P(W) = P(w_1 | <s>) P(w_2 | w_1) P(w_3 | w_2) \dots P(w_n | w_{n-1}) P(</s> | w_n)
+P(W) = P(w_1 | < s>) P(w_2 | w_1) P(w_3 | w_2) \dots P(w_n | w_{n-1}) P(< /s> | w_n)
 $$
 
 Applying **Laplace Smoothing**, the bigram probability is:
@@ -311,48 +311,48 @@ where:
 
 ### **2. Extract Required Counts**
 
-For the sentence **`<s> i want english food </s>`**, we need:
+For the sentence **`<s> i want english food < /s>`**, we need:
 
-1. **log P(i | \<s>)**
+1. **log P(i | < s>)**
 2. **log P(want | i)**
 3. **log P(english | want)** → **(Not in Table, handled with Laplace smoothing)**
 4. **log P(food | english)** → **(Not in Table, handled with Laplace smoothing)**
-5. **log P(</s> | food)**
+5. **log P(< /s> | food)**
 
 From the table:
 
-- $ C(i) = 2533 $
-- $ C(want) = 927 $
-- $ C(food) = 1093 $
-- Vocabulary size **$ V = 1446 $**
+- $C(i) = 2533$
+- $C(want) = 927$
+- $C(food) = 1093$
+- Vocabulary size **$V = 1446$**
 
 ---
 
 ### **3. Compute Log Probabilities with Laplace Smoothing**
 
-#### **Step 1: Compute log P(i | \<s>)**
+#### **Step 1: Compute log P(i | < s>)**
 
-Since $ C(<s>, i) $ is missing, assume **1** (unknown case):
-
-$$
-P(i | <s>) = \frac{C(<s>, i) + 1}{C(<s>) + V} = \frac{1 + 1}{2533 + 1446}
-$$
+Since $C(< s>, i)$ is missing, assume **1** (unknown case):
 
 $$
-P(i | <s>) = \frac{2}{3979} \approx 0.0005
+P(i | < s>) = \frac{C(< s>, i) + 1}{C(< s>) + V} = \frac{1 + 1}{2533 + 1446}
+$$
+
+$$
+P(i | < s>) = \frac{2}{3979} \approx 0.0005
 $$
 
 Taking the **log**:
 
 $$
-\log P(i | <s>) = \log(0.0005) \approx -7.60
+\log P(i | < s>) = \log(0.0005) \approx -7.60
 $$
 
 ---
 
 #### **Step 2: Compute log P(want | i)**
 
-From the table: $ C(i, want) = 827 $
+From the table: $C(i, want) = 827$
 
 $$
 P(want | i) = \frac{827 + 1}{2533 + 1446} = \frac{828}{3979} \approx 0.2081
@@ -396,18 +396,18 @@ $$
 
 ---
 
-#### **Step 5: Compute log P(</s> | food)**
+#### **Step 5: Compute log P(< /s> | food)**
 
-Since **food → </s>** is missing:
+Since **food → < /s>** is missing:
 
 $$
-P(</s> | food) = \frac{0 + 1}{1093 + 1446} = \frac{1}{2539} \approx 0.00039
+P(< /s> | food) = \frac{0 + 1}{1093 + 1446} = \frac{1}{2539} \approx 0.00039
 $$
 
 Taking the **log**:
 
 $$
-\log P(</s> | food) = \log(0.00039) \approx -7.85
+\log P(< /s> | food) = \log(0.00039) \approx -7.85
 $$
 
 ---
@@ -417,7 +417,7 @@ $$
 Now, summing all **log probabilities**:
 
 $$
-\log P(\text{sentence}) = \log P(i | <s>) + \log P(want | i) + \log P(english | want) + \log P(food | english) + \log P(</s> | food)
+\log P(\text{sentence}) = \log P(i | < s>) + \log P(want | i) + \log P(english | want) + \log P(food | english) + \log P(< /s> | food)
 $$
 
 $$
