@@ -159,7 +159,7 @@ $$
 Using the **Bigram Language Model**, the probability of a sentence is:
 
 $$
-P(W) = P(w_1 | < s>) P(w_2 | w_1) P(w_3 | w_2) \dots P(w_n | w_{n-1}) P( | w_n)
+P(w_{1:n}) \approx \prod_{k=1}^{n} P(w_k | w_{k-1})
 $$
 
 Applying **Laplace Smoothing**, the bigram probability is:
@@ -170,8 +170,8 @@ $$
 
 where:
 
-- $C(w*{i-1}, w_i)$ = Count of bigram $(w*{i-1}, w_i)$
-- $C(w*{i-1})$ = Count of unigram $w*{i-1}$
+- $C(w_{i-1}, w_i)$ = Count of bigram $(w_{i-1}, w_i)$
+- $C(w_{i-1})$ = Count of unigram $w_{i-1}$
 - $V$ = Vocabulary size (**1446** from the table)
 - **Laplace smoothing (Add 1)** ensures probabilities are nonzero.
 
@@ -244,7 +244,7 @@ $$
 Since **food → < /s>** is missing:
 
 $$
-P(\< /s> | food) = \frac{0 + 1}{1093 + 1446} = \frac{1}{2539} \approx 0.00039
+P(< /s> | food) = \frac{0 + 1}{1093 + 1446} = \frac{1}{2539} \approx 0.00039
 $$
 
 ---
@@ -254,7 +254,7 @@ $$
 Multiply all probabilities:
 
 $$
-P(\text{sentence}) = P(i | < s>) \times P(want | i) \times P(english | want) \times P(food | english) \times P(\</s> | food)
+P(\text{sentence}) = P(i | < s>) \times P(want | i) \times P(english | want) \times P(food | english) \times P(</s> | food)
 $$
 
 $$
@@ -288,7 +288,7 @@ $$
 Using the **Bigram Language Model**, the probability of a sentence is:
 
 $$
-P(W) = P(w_1 | < s>) P(w_2 | w_1) P(w_3 | w_2) \dots P(w_n | w_{n-1}) P(< /s> | w_n)
+P(w_{1:n}) \approx \prod_{k=1}^{n} P(w_k | w_{k-1})
 $$
 
 Applying **Laplace Smoothing**, the bigram probability is:
