@@ -72,7 +72,7 @@ $$
 
 where:
 
-- $ v_i $ and $ w_i $ are the components of vectors **v** and **w**.
+- $v_i$ and $w_i$ are the components of vectors **v** and **w**.
 - The numerator is the **dot product** of **v** and **w**.
 - The denominator is the **product of the Euclidean norms** of **v** and **w**.
 
@@ -80,8 +80,8 @@ where:
 
 ### Given Values:
 
-- **Digital:** $ A = (5, 1683, 1670) $
-- **Information:** $ B = (5, 3982, 3325) $
+- **Digital:** $A = (5, 1683, 1670)$
+- **Information:** $B = (5, 3982, 3325)$
 
 ### Calculation:
 
@@ -125,14 +125,14 @@ $$
 
 where:
 
-- $ v_i $ and $ w_i $ are the components of vectors **W** and **V**.
+- $v_i$ and $w_i$ are the components of vectors **W** and **V**.
 
 ---
 
 ### Given Values:
 
-- **Digital:** $ A = (5, 1683, 1670) $
-- **Information:** $ B = (5, 3982, 3325) $
+- **Digital:** $A = (5, 1683, 1670)$
+- **Information:** $B = (5, 3982, 3325)$
 
 #### Calculation:
 
